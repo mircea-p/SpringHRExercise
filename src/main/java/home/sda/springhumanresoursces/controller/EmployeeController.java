@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -38,10 +39,26 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<String> updateEmployee(@RequestParam(value = "id") Integer employeeid) {
+    @Transactional
+    public ResponseEntity<String> deleteEmployee(@RequestParam(value = "id", required = false) Integer employeeid) {
         log.info("Vreau sa Sterg!");
-        employeeService.deleteEmployee(employeeid);
-        return new ResponseEntity<>("Am sters Employee-ul cu id-ul: " + employeeid, HttpStatus.ACCEPTED);
+        Integer sters;
+        if(employeeid == null){
+            throw new IllegalArgumentException("Id-ul Employee-ului lipseste, nu putem sterge fara el");
+        }else {
+            sters = employeeService.deleteEmployeeById(employeeid);
+        }
+
+        if(sters == 1)
+            return new ResponseEntity<>("Am sters Employee-ul cu id-ul: " + employeeid, HttpStatus.ACCEPTED);
+        else
+            return new ResponseEntity<>("Nu s-a sters, id Employee inexistent! Id: " + employeeid, HttpStatus.BAD_REQUEST);
+
+
+    }
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<String> catchIllegalArgumentException(IllegalArgumentException e) {
+        return new ResponseEntity<>("Illegal arguments...bla bla: " + e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
 }

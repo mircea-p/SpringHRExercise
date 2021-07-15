@@ -12,9 +12,7 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private Integer id;
-    @Column(name = "name")
     private String name;
-    @Transient // ii spune la hibernate sa nu se lege de el, sa-l ignore.
     private double budget;
     @Transient
     private String currency;

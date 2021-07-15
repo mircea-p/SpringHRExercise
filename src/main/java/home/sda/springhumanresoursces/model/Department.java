@@ -22,6 +22,13 @@ public class Department {
         @OneToMany(mappedBy = "department") // aici pun numele clasei din employee
         private List<Employee> employeeList;
 
+        @Override
+        public String toString() {
+                return "Department{" +
+                        "id=" + id +
+                        ", name='" + name + '\'' +
+                        '}';
+        }
 }
 
 

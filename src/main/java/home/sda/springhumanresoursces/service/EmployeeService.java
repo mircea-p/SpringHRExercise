@@ -20,8 +20,8 @@ public class EmployeeService {
         employeeRepository.save(employee);
         log.info("Sefule, alo, am salvat un Employee nou!!!");
     }
-    public void deleteEmployee(Integer id){
-        employeeRepository.deleteById(id);
+    public Integer deleteEmployeeById(Integer id){
         log.info("Sefule, alo, am sters un Employee!");
+       return employeeRepository.deleteEmployeeById(id);
     }
 }
