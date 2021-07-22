@@ -10,7 +10,6 @@ import java.util.HashSet;
 import java.util.Set;
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(name = "employees")
 public class Employee {
@@ -38,4 +37,16 @@ public class Employee {
     inverseJoinColumns = {@JoinColumn(name = "projectId")})
     private Set<Project> projectSet = new HashSet<>();
 
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", email='" + email + '\'' +
+                ", salary=" + salary +
+                '}'+"\n";
+    }
 }

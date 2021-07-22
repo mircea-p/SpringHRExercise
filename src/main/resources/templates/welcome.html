@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome</title>
+</head>
+<body>
+<p th:text="${myCustomHelloMessage}"> </p>
+<p> Actions available </p>
+<table>
+    <tr>
+        <td> <a th:href = "@{/hr/employee/get}" th:text="${actionOne}"></a> </td>
+    </tr>
+    <tr>
+        <td > <a th:href="@{/addNewEmployee}" th:text="${actionTwo}"></a> </td>
+    </tr>
+    <tr>
+        <td ><a th:href="@{/employees/deleteEmployees}" th:text="${actionThree}"></a></td>
+    </tr>
+</table>
+</body>
+</html>
+

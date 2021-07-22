@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome2</title>
+</head>
+<body>
+<p> Welcome2 to Spring Hr aplication!</p>
+<p>Available actions</p>
+<table>
+  <tr>
+    <td> <a th:href="@{employee/get}"> Get all employees</a> <td>
+  </tr>
+  <tr>
+    <td><a th:href="@{/addNewEmployee}">Bla</a></td>
+  </tr>
+  <tr>
+    <td>Delete employee</td>
+  </tr>
+</table>
+
+</body>
+</html>

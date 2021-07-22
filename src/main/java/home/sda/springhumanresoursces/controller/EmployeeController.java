@@ -24,7 +24,7 @@ public class EmployeeController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<String> createEmployee(@RequestBody Employee employee) {
+    public ResponseEntity<String> createEmployee(@RequestBody @ModelAttribute("employee") Employee employee) {
         log.info("Vreau sa salvez!");
         employeeService.saveEmployee(employee);
         return new ResponseEntity<>("Am creat un Employee nou: " + employee.toString(), HttpStatus.CREATED);
@@ -34,9 +34,24 @@ public class EmployeeController {
     @PutMapping("/update")
     public ResponseEntity<String> updateEmployee(@RequestBody Employee employee) {
         log.info("Vreau sa fac update!");
-        employeeService.saveEmployee(employee);
+        employeeService.updateEmployee(employee);
         return new ResponseEntity<>("Am facut update!", HttpStatus.ACCEPTED);
     }
+
+    @GetMapping("/findEmployeeByDepartment")
+    public ResponseEntity<String> findEmployeeByDepartment(@RequestParam(value = "dep") String departmentName) {
+        log.info("Vreau sa caut by department!");
+        return new ResponseEntity<>("Am cautat by department:"+employeeService.findEmployeesByDepatmentName(departmentName).toString(), HttpStatus.ACCEPTED);
+    }
+
+    @PostMapping("/assignProject")
+    public ResponseEntity<String> assignEmployeeToProject(@RequestParam(value = "employeeId")Integer employeeId,
+                                        @RequestParam(value = "projectId")Integer projectId)
+    {
+        employeeService.assignProject(employeeId, projectId);
+        return new ResponseEntity<>("I have assigned them!", HttpStatus.ACCEPTED);
+    }
+
 
     @DeleteMapping("/delete")
     @Transactional
@@ -52,13 +67,9 @@ public class EmployeeController {
         if(sters == 1)
             return new ResponseEntity<>("Am sters Employee-ul cu id-ul: " + employeeid, HttpStatus.ACCEPTED);
         else
-            return new ResponseEntity<>("Nu s-a sters, id Employee inexistent! Id: " + employeeid, HttpStatus.BAD_REQUEST);
+             return new ResponseEntity<>("Nu s-a sters, id Employee inexistent! Id: " + employeeid, HttpStatus.BAD_REQUEST);
 
 
-    }
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<String> catchIllegalArgumentException(IllegalArgumentException e) {
-        return new ResponseEntity<>("Illegal arguments...bla bla: " + e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
 }
